@@ -1,0 +1,208 @@
+{
+  "info": {
+    "name": "API Biblioteca Escolar - Trabalho 1",
+    "description": "Coleção cobrindo todos os endpoints da API (livros, estudantes, empréstimos) e os principais casos de erro (400, 404, 409).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api/v1" }
+  ],
+  "item": [
+    {
+      "name": "Livros",
+      "item": [
+        { "name": "Listar livros", "request": { "method": "GET", "url": "{{baseUrl}}/livros" } },
+        { "name": "Listar livros com paginação", "request": { "method": "GET", "url": "{{baseUrl}}/livros?page=1&limit=2" } },
+        { "name": "Filtrar livros por gênero", "request": { "method": "GET", "url": "{{baseUrl}}/livros?genero=ficcao" } },
+        { "name": "Buscar livros por título (keyword)", "request": { "method": "GET", "url": "{{baseUrl}}/livros?titulo=dom" } },
+        { "name": "Filtros combinados + ordenação", "request": { "method": "GET", "url": "{{baseUrl}}/livros?genero=ficcao&ano_min=1950&sort=-anoPublicacao" } },
+        { "name": "Buscar livro por id", "request": { "method": "GET", "url": "{{baseUrl}}/livros/1" } },
+        {
+          "name": "Criar livro",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/livros",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Neuromancer\",\n  \"autor\": \"William Gibson\",\n  \"genero\": \"ficcao\",\n  \"isbn\": \"978-85-000-0000-1\",\n  \"anoPublicacao\": 1984,\n  \"quantidadeTotal\": 2\n}"
+            }
+          }
+        },
+        {
+          "name": "Substituir livro (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/livros/2",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"O Cortiço\",\n  \"autor\": \"Aluísio Azevedo\",\n  \"genero\": \"romance\",\n  \"isbn\": \"978-85-254-1110-9\",\n  \"anoPublicacao\": 1890,\n  \"quantidadeTotal\": 4,\n  \"quantidadeDisponivel\": 4\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar parcialmente livro (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/livros/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"quantidadeTotal\": 10\n}" }
+          }
+        },
+        { "name": "Remover livro", "request": { "method": "DELETE", "url": "{{baseUrl}}/livros/4" } },
+        {
+          "name": "[ERRO 404] Buscar livro inexistente",
+          "request": { "method": "GET", "url": "{{baseUrl}}/livros/9999" }
+        },
+        {
+          "name": "[ERRO 400] Criar livro sem campos obrigatórios",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/livros",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"titulo\": \"Livro incompleto\"\n}" }
+          }
+        },
+        {
+          "name": "[ERRO 409] Criar livro com ISBN duplicado",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/livros",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Duplicado\",\n  \"autor\": \"Autor X\",\n  \"genero\": \"ficcao\",\n  \"isbn\": \"978-85-254-1111-6\",\n  \"anoPublicacao\": 2020,\n  \"quantidadeTotal\": 1\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Estudantes",
+      "item": [
+        { "name": "Listar estudantes", "request": { "method": "GET", "url": "{{baseUrl}}/estudantes" } },
+        { "name": "Filtrar estudantes por turma", "request": { "method": "GET", "url": "{{baseUrl}}/estudantes?turma=3A" } },
+        { "name": "Buscar estudante por id", "request": { "method": "GET", "url": "{{baseUrl}}/estudantes/1" } },
+        { "name": "Listar empréstimos de um estudante (aninhado)", "request": { "method": "GET", "url": "{{baseUrl}}/estudantes/1/emprestimos" } },
+        {
+          "name": "Criar estudante",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/estudantes",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Daniela Ferreira\",\n  \"email\": \"daniela.ferreira@escola.edu.br\",\n  \"matricula\": \"2024004\",\n  \"turma\": \"3B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Substituir estudante (PUT)",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/estudantes/3",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Carla Mendes\",\n  \"email\": \"carla.mendes@escola.edu.br\",\n  \"matricula\": \"2024003\",\n  \"turma\": \"2C\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Atualizar parcialmente estudante (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/estudantes/2",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"turma\": \"3C\"\n}" }
+          }
+        },
+        { "name": "Remover estudante", "request": { "method": "DELETE", "url": "{{baseUrl}}/estudantes/3" } },
+        {
+          "name": "[ERRO 404] Buscar estudante inexistente",
+          "request": { "method": "GET", "url": "{{baseUrl}}/estudantes/9999" }
+        },
+        {
+          "name": "[ERRO 400] Criar estudante com e-mail inválido",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/estudantes",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Ana\",\n  \"email\": \"nao-e-um-email\",\n  \"matricula\": \"2024099\",\n  \"turma\": \"1A\"\n}"
+            }
+          }
+        },
+        {
+          "name": "[ERRO 409] Criar estudante com matrícula duplicada",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/estudantes",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Outro Estudante\",\n  \"email\": \"outro@escola.edu.br\",\n  \"matricula\": \"2024001\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Empréstimos",
+      "item": [
+        { "name": "Listar empréstimos", "request": { "method": "GET", "url": "{{baseUrl}}/emprestimos" } },
+        { "name": "Filtrar empréstimos por status", "request": { "method": "GET", "url": "{{baseUrl}}/emprestimos?status=ativo" } },
+        { "name": "Buscar empréstimo por id", "request": { "method": "GET", "url": "{{baseUrl}}/emprestimos/1" } },
+        {
+          "name": "Criar empréstimo",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/emprestimos",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 2,\n  \"estudanteId\": 3,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Registrar devolução (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/emprestimos/1",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"devolvido\",\n  \"dataDevolucaoReal\": \"2026-09-10\"\n}" }
+          }
+        },
+        { "name": "Remover empréstimo", "request": { "method": "DELETE", "url": "{{baseUrl}}/emprestimos/2" } },
+        {
+          "name": "[ERRO 404] Buscar empréstimo inexistente",
+          "request": { "method": "GET", "url": "{{baseUrl}}/emprestimos/9999" }
+        },
+        {
+          "name": "[ERRO 400] Criar empréstimo sem campos obrigatórios",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/emprestimos",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"livroId\": 1\n}" }
+          }
+        },
+        {
+          "name": "[ERRO 409] Criar empréstimo sem exemplares disponíveis",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/emprestimos",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 4,\n  \"estudanteId\": 1,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

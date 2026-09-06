@@ -1,0 +1,30 @@
+{
+  "name": "trabalho1-api-biblioteca-escolar",
+  "version": "1.0.0",
+  "description": "API REST para um sistema de biblioteca escolar - Trabalho 1 (Desenvolvimento de Software II)",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest --runInBand"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "express",
+    "biblioteca-escolar"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4",
+    "supertest": "^7.0.0"
+  }
+}
