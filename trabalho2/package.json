@@ -1,0 +1,43 @@
+{
+  "name": "trabalho2-api-biblioteca-escolar",
+  "version": "2.0.0",
+  "description": "Trabalho 2 - API REST da biblioteca escolar evoluída com banco de dados relacional (SQLite + Sequelize)",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest --runInBand",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate:undo": "sequelize-cli db:migrate:undo",
+    "db:seed": "sequelize-cli db:seed:all",
+    "db:reset": "rimraf data/dev.sqlite3 && npm run db:migrate && npm run db:seed"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "express",
+    "sequelize",
+    "biblioteca-escolar"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^5.1.7",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4",
+    "rimraf": "^5.0.10",
+    "sequelize-cli": "^6.6.2",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "globalSetup": "./tests/globalSetup.js"
+  }
+}
