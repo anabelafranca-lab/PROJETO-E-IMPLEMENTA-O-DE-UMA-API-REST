@@ -1,0 +1,2141 @@
+{
+  "info": {
+    "name": "API Biblioteca Escolar — Trabalho 3 (comportamento idêntico ao Trabalho 2)",
+    "description": "Cobre todos os endpoints e os casos de erro (400/404/409). Execute os itens EM ORDEM, contra um banco recém-semeado (as requisições dependem de estado). Via linha de comando: npm run test:postman",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "0 - Geral",
+      "item": [
+        {
+          "name": "raiz [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/"
+          }
+        },
+        {
+          "name": "rota inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ROTA_NAO_ENCONTRADA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ROTA_NAO_ENCONTRADA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/nao-existe"
+          }
+        }
+      ]
+    },
+    {
+      "name": "1 - Livros",
+      "item": [
+        {
+          "name": "livros: listar [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 12)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(12); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros"
+          }
+        },
+        {
+          "name": "livros: página 2 limite 5 [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 12)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(12); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?page=2&limit=5"
+          }
+        },
+        {
+          "name": "livros: page=0 e limit inválido [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 12)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(12); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?page=0&limit=abc"
+          }
+        },
+        {
+          "name": "livros: filtro gênero [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 3)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(3); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?genero=fantasia"
+          }
+        },
+        {
+          "name": "livros: gênero inexistente [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 0)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(0); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?genero=inexistente"
+          }
+        },
+        {
+          "name": "livros: busca por título [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 1)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?titulo=dom"
+          }
+        },
+        {
+          "name": "livros: autor + ordenação desc [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 2)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?autor=machado&ordenar=anoPublicacao&direcao=desc"
+          }
+        },
+        {
+          "name": "livros: faixa de anos + ordenar título [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 4)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(4); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?ano_min=1950&ano_max=2000&ordenar=titulo"
+          }
+        },
+        {
+          "name": "livros: ano exato [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 2)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?anoPublicacao=2011"
+          }
+        },
+        {
+          "name": "livros: ordenar por campo inválido [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 12)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(12); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?ordenar=hack&direcao=DESC"
+          }
+        },
+        {
+          "name": "livros: buscar por id [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 1', function () { pm.expect(pm.response.json().id).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/1"
+          }
+        },
+        {
+          "name": "livros: id inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: LIVRO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/9999"
+          }
+        },
+        {
+          "name": "livros: criar [201]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"O Guia do Mochileiro das Galáxias\",\n  \"autor\": \"Douglas Adams\",\n  \"isbn\": \"978-00-000-9999-9\",\n  \"anoPublicacao\": 1979,\n  \"quantidadeTotal\": 3,\n  \"generos\": [\n    \"Ficcao\",\n    \"Novo-Genero\"\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: criar sem campos [400]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('erro padronizado: ENTRADA_INVALIDA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ENTRADA_INVALIDA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Incompleto\"\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: criar ISBN duplicado [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: REGISTRO_DUPLICADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"REGISTRO_DUPLICADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"O Guia do Mochileiro das Galáxias\",\n  \"autor\": \"Douglas Adams\",\n  \"isbn\": \"978-85-254-1111-6\",\n  \"anoPublicacao\": 1979,\n  \"quantidadeTotal\": 3,\n  \"generos\": [\n    \"Ficcao\",\n    \"Novo-Genero\"\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: criar ano como texto [400]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('erro padronizado: ENTRADA_INVALIDA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ENTRADA_INVALIDA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"O Guia do Mochileiro das Galáxias\",\n  \"autor\": \"Douglas Adams\",\n  \"isbn\": \"978-00-000-1111-1\",\n  \"anoPublicacao\": \"abc\",\n  \"quantidadeTotal\": 3,\n  \"generos\": [\n    \"Ficcao\",\n    \"Novo-Genero\"\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: criar sem gêneros [400]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('erro padronizado: ENTRADA_INVALIDA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ENTRADA_INVALIDA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"O Guia do Mochileiro das Galáxias\",\n  \"autor\": \"Douglas Adams\",\n  \"isbn\": \"978-00-000-2222-2\",\n  \"anoPublicacao\": 1979,\n  \"quantidadeTotal\": 3,\n  \"generos\": []\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: JSON malformado [500]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 500', function () { pm.response.to.have.status(500); });",
+                  "pm.test('erro padronizado: ERRO_INTERNO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ERRO_INTERNO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"titulo\":"
+            }
+          }
+        },
+        {
+          "name": "livros: PUT [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Guia (2ª edição)\",\n  \"autor\": \"Douglas Adams\",\n  \"isbn\": \"978-00-000-9999-9\",\n  \"anoPublicacao\": 1979,\n  \"quantidadeTotal\": 5,\n  \"generos\": [\n    \"ficcao\"\n  ],\n  \"quantidadeDisponivel\": 4\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: PUT inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: LIVRO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros/9999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"O Guia do Mochileiro das Galáxias\",\n  \"autor\": \"Douglas Adams\",\n  \"isbn\": \"978-00-000-9999-9\",\n  \"anoPublicacao\": 1979,\n  \"quantidadeTotal\": 3,\n  \"generos\": [\n    \"Ficcao\",\n    \"Novo-Genero\"\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: PUT ISBN duplicado [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: REGISTRO_DUPLICADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"REGISTRO_DUPLICADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"O Guia do Mochileiro das Galáxias\",\n  \"autor\": \"Douglas Adams\",\n  \"isbn\": \"978-85-254-1109-3\",\n  \"anoPublicacao\": 1979,\n  \"quantidadeTotal\": 3,\n  \"generos\": [\n    \"Ficcao\",\n    \"Novo-Genero\"\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: PATCH quantidade [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantidadeTotal\": 10\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: PATCH gêneros [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"generos\": [\n    \"poesia\"\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: PATCH corpo vazio [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
+          }
+        },
+        {
+          "name": "livros: PATCH inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: LIVRO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/livros/9999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"X\"\n}"
+            }
+          }
+        },
+        {
+          "name": "livros: DELETE com empréstimo ativo [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: LIVRO_EM_USO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_EM_USO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/1"
+          }
+        },
+        {
+          "name": "livros: DELETE (soft delete) [204]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 204', function () { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/13"
+          }
+        },
+        {
+          "name": "livros: GET após soft delete [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: LIVRO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/13"
+          }
+        },
+        {
+          "name": "livros: DELETE inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: LIVRO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/9999"
+          }
+        },
+        {
+          "name": "livros: listagem completa após mudanças [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 12)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(12); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?limit=100"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Estudantes",
+      "item": [
+        {
+          "name": "estudantes: listar [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 12)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(12); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes"
+          }
+        },
+        {
+          "name": "estudantes: turma + ordenar nome desc [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 3)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(3); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes?turma=3A&ordenar=nome&direcao=desc"
+          }
+        },
+        {
+          "name": "estudantes: busca por nome [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 5)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(5); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes?nome=an"
+          }
+        },
+        {
+          "name": "estudantes: buscar por id [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 1', function () { pm.expect(pm.response.json().id).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/1"
+          }
+        },
+        {
+          "name": "estudantes: id inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ESTUDANTE_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/9999"
+          }
+        },
+        {
+          "name": "estudantes: empréstimos do estudante [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 2)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/1/emprestimos"
+          }
+        },
+        {
+          "name": "estudantes: empréstimos filtrados por status [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 1)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/1/emprestimos?status=ativo"
+          }
+        },
+        {
+          "name": "estudantes: empréstimos de inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ESTUDANTE_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/9999/emprestimos"
+          }
+        },
+        {
+          "name": "estudantes: criar [201]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Marcos Vinícius Teixeira\",\n  \"email\": \"marcos.teixeira@escola.edu.br\",\n  \"matricula\": \"2024099\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: e-mail inválido [400]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('erro padronizado: ENTRADA_INVALIDA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ENTRADA_INVALIDA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Marcos Vinícius Teixeira\",\n  \"email\": \"nao-e-email\",\n  \"matricula\": \"2024099\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: matrícula duplicada [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: REGISTRO_DUPLICADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"REGISTRO_DUPLICADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Marcos Vinícius Teixeira\",\n  \"email\": \"outro@escola.edu.br\",\n  \"matricula\": \"2024001\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: e-mail duplicado [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: REGISTRO_DUPLICADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"REGISTRO_DUPLICADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Marcos Vinícius Teixeira\",\n  \"email\": \"ana.souza@escola.edu.br\",\n  \"matricula\": \"2024555\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: PUT [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Marcos V. Teixeira\",\n  \"email\": \"marcos.teixeira@escola.edu.br\",\n  \"matricula\": \"2024099\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: PUT matrícula duplicada [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: REGISTRO_DUPLICADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"REGISTRO_DUPLICADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Marcos Vinícius Teixeira\",\n  \"email\": \"marcos.teixeira@escola.edu.br\",\n  \"matricula\": \"2024001\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: PUT inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ESTUDANTE_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes/9999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Marcos Vinícius Teixeira\",\n  \"email\": \"marcos.teixeira@escola.edu.br\",\n  \"matricula\": \"2024099\",\n  \"turma\": \"1B\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: PATCH [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 13', function () { pm.expect(pm.response.json().id).to.eql(13); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes/13",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"turma\": \"2C\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: PATCH inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ESTUDANTE_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/estudantes/9999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"turma\": \"2C\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estudantes: DELETE com empréstimo ativo [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: ESTUDANTE_COM_EMPRESTIMO_ATIVO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_COM_EMPRESTIMO_ATIVO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/1"
+          }
+        },
+        {
+          "name": "estudantes: DELETE (soft delete) [204]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 204', function () { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/13"
+          }
+        },
+        {
+          "name": "estudantes: GET após soft delete [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ESTUDANTE_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/13"
+          }
+        },
+        {
+          "name": "estudantes: DELETE inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ESTUDANTE_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/estudantes/9999"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Empréstimos e transações",
+      "item": [
+        {
+          "name": "empréstimos: listar [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 14)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(14); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos"
+          }
+        },
+        {
+          "name": "empréstimos: filtro status [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 7)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(7); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos?status=ativo"
+          }
+        },
+        {
+          "name": "empréstimos: filtro livro + ordenação [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 2)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos?livroId=3&ordenar=dataEmprestimo&direcao=desc"
+          }
+        },
+        {
+          "name": "empréstimos: filtro estudante [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 2)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos?estudanteId=1"
+          }
+        },
+        {
+          "name": "empréstimos: buscar por id [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 1', function () { pm.expect(pm.response.json().id).to.eql(1); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos/1"
+          }
+        },
+        {
+          "name": "empréstimos: id inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: EMPRESTIMO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"EMPRESTIMO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos/9999"
+          }
+        },
+        {
+          "name": "estoque antes (livro 2) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 2', function () { pm.expect(pm.response.json().id).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/2"
+          }
+        },
+        {
+          "name": "empréstimos: registrar [201]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('devolve o recurso com id 15', function () { pm.expect(pm.response.json().id).to.eql(15); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 2,\n  \"estudanteId\": 3,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estoque depois (livro 2) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 2', function () { pm.expect(pm.response.json().id).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/2"
+          }
+        },
+        {
+          "name": "empréstimos: livro inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: LIVRO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 99999,\n  \"estudanteId\": 1,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: estudante inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: ESTUDANTE_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ESTUDANTE_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 1,\n  \"estudanteId\": 99999,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: sem campos [400]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('erro padronizado: ENTRADA_INVALIDA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ENTRADA_INVALIDA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: data inválida [400]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('erro padronizado: ENTRADA_INVALIDA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ENTRADA_INVALIDA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 1,\n  \"estudanteId\": 1,\n  \"dataEmprestimo\": \"05/09/2026\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: livro 4 (1º exemplar) [201]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('devolve o recurso com id 16', function () { pm.expect(pm.response.json().id).to.eql(16); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 4,\n  \"estudanteId\": 6,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: livro 4 (2º exemplar) [201]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('devolve o recurso com id 17', function () { pm.expect(pm.response.json().id).to.eql(17); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 4,\n  \"estudanteId\": 7,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: livro 4 sem estoque [409]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 409', function () { pm.response.to.have.status(409); });",
+                  "pm.test('erro padronizado: LIVRO_INDISPONIVEL', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"LIVRO_INDISPONIVEL\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 4,\n  \"estudanteId\": 8,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: histórico do livro 4 (sem fantasma) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 3)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(3); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos?livroId=4"
+          }
+        },
+        {
+          "name": "empréstimos: devolver com data [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 15', function () { pm.expect(pm.response.json().id).to.eql(15); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/15",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"devolvido\",\n  \"dataDevolucaoReal\": \"2026-09-10\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estoque após devolução (livro 2) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 2', function () { pm.expect(pm.response.json().id).to.eql(2); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/2"
+          }
+        },
+        {
+          "name": "empréstimos: devolver sem data (usa hoje) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 16', function () { pm.expect(pm.response.json().id).to.eql(16); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/16",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"devolvido\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: devolver de novo (idempotente) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 16', function () { pm.expect(pm.response.json().id).to.eql(16); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/16",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"devolvido\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estoque após 2 devoluções (livro 4) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 4', function () { pm.expect(pm.response.json().id).to.eql(4); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/4"
+          }
+        },
+        {
+          "name": "empréstimos: PATCH inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: EMPRESTIMO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"EMPRESTIMO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/9999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"devolvido\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: PATCH atrasado [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 17', function () { pm.expect(pm.response.json().id).to.eql(17); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/17",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"atrasado\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: PATCH status inválido [400]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('erro padronizado: ENTRADA_INVALIDA', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"ENTRADA_INVALIDA\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/17",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"perdido\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: PUT [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 17', function () { pm.expect(pm.response.json().id).to.eql(17); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/17",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 4,\n  \"estudanteId\": 8,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: PUT inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: EMPRESTIMO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"EMPRESTIMO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos/9999",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 4,\n  \"estudanteId\": 8,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "empréstimos: DELETE não ativo [204]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 204', function () { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos/17"
+          }
+        },
+        {
+          "name": "empréstimos: criar para teste de remoção [201]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('devolve o recurso com id 18', function () { pm.expect(pm.response.json().id).to.eql(18); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/emprestimos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"livroId\": 11,\n  \"estudanteId\": 12,\n  \"dataEmprestimo\": \"2026-09-05\",\n  \"dataDevolucaoPrevista\": \"2026-09-19\"\n}"
+            }
+          }
+        },
+        {
+          "name": "estoque antes de remover (livro 11) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 11', function () { pm.expect(pm.response.json().id).to.eql(11); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/11"
+          }
+        },
+        {
+          "name": "empréstimos: DELETE ativo repõe estoque [204]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 204', function () { pm.response.to.have.status(204); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos/18"
+          }
+        },
+        {
+          "name": "estoque após remoção (livro 11) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('devolve o recurso com id 11', function () { pm.expect(pm.response.json().id).to.eql(11); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros/11"
+          }
+        },
+        {
+          "name": "empréstimos: DELETE inexistente [404]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 404', function () { pm.response.to.have.status(404); });",
+                  "pm.test('erro padronizado: EMPRESTIMO_NAO_ENCONTRADO', function () { pm.expect(pm.response.json().erro.codigo).to.eql(\"EMPRESTIMO_NAO_ENCONTRADO\"); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos/9999"
+          }
+        },
+        {
+          "name": "empréstimos: listagem final [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 16)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(16); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/emprestimos?limit=100"
+          }
+        },
+        {
+          "name": "livros: estado final (estoques) [200]",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('lista paginada (total 12)', function () { const j = pm.response.json(); pm.expect(j.dados).to.be.an('array'); pm.expect(j.paginacao.total).to.eql(12); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/livros?limit=100&ordenar=titulo"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+openapi: 3.0.3
+info:
+  title: API do Sistema de Biblioteca Escolar (Trabalho 2)
+  description: >
+    API REST para gestão de uma biblioteca escolar, agora persistida em banco
+    de dados relacional (SQLite) via Sequelize, com migrations, seeds,
+    relacionamentos 1-N e N-N, e operações transacionais.
+  version: "2.0.0"
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Servidor local de desenvolvimento
+
+tags:
+  - name: Livros
+  - name: Estudantes
+  - name: Empréstimos
+
+paths:
+  /livros:
+    get:
+      tags: [Livros]
+      summary: Lista livros
+      description: Filtros, ordenação e paginação são resolvidos no banco (WHERE/ORDER BY/LIMIT/OFFSET), nunca em memória.
+      parameters:
+        - { name: genero, in: query, schema: { type: string }, description: "Filtra livros que possuem este gênero (via JOIN)" }
+        - { name: titulo, in: query, schema: { type: string }, description: "Busca por palavra-chave no título" }
+        - { name: autor, in: query, schema: { type: string } }
+        - { name: anoPublicacao, in: query, schema: { type: integer } }
+        - { name: ano_min, in: query, schema: { type: integer } }
+        - { name: ano_max, in: query, schema: { type: integer } }
+        - { name: ordenar, in: query, schema: { type: string, enum: [titulo, autor, anoPublicacao, quantidadeDisponivel, createdAt] } }
+        - { name: direcao, in: query, schema: { type: string, enum: [asc, desc], default: asc } }
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+        - { name: limit, in: query, schema: { type: integer, default: 10 } }
+      responses:
+        "200":
+          description: Lista paginada de livros
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dados: { type: array, items: { $ref: "#/components/schemas/Livro" } }
+                  paginacao: { $ref: "#/components/schemas/Paginacao" }
+    post:
+      tags: [Livros]
+      summary: Cadastra um novo livro (transacional — livro + vínculo com gêneros)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NovoLivro" }
+            example:
+              titulo: Neuromancer
+              autor: William Gibson
+              isbn: "978-85-000-0000-1"
+              anoPublicacao: 1984
+              quantidadeTotal: 2
+              generos: [ficcao-cientifica]
+      responses:
+        "201": { description: Livro criado, content: { application/json: { schema: { $ref: "#/components/schemas/Livro" } } } }
+        "400": { $ref: "#/components/responses/EntradaInvalida" }
+        "409": { $ref: "#/components/responses/Conflito" }
+
+  /livros/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get:
+      tags: [Livros]
+      summary: Retorna um livro específico (com seus gêneros)
+      responses:
+        "200": { description: Livro encontrado, content: { application/json: { schema: { $ref: "#/components/schemas/Livro" } } } }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+    put:
+      tags: [Livros]
+      summary: Substitui um livro existente
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/NovoLivro" } } }
+      responses:
+        "200": { description: Substituído, content: { application/json: { schema: { $ref: "#/components/schemas/Livro" } } } }
+        "400": { $ref: "#/components/responses/EntradaInvalida" }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflito" }
+    patch:
+      tags: [Livros]
+      summary: Atualiza parcialmente um livro
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LivroParcial" }
+            example: { quantidadeTotal: 10 }
+      responses:
+        "200": { description: Atualizado, content: { application/json: { schema: { $ref: "#/components/schemas/Livro" } } } }
+        "400": { $ref: "#/components/responses/EntradaInvalida" }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflito" }
+    delete:
+      tags: [Livros]
+      summary: Remove um livro (soft delete — grava deleted_at)
+      description: Retorna 409 se o livro possui empréstimos ativos (integridade referencial protegida na aplicação e no banco).
+      responses:
+        "204": { description: Removido }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflito" }
+
+  /estudantes:
+    get:
+      tags: [Estudantes]
+      summary: Lista estudantes
+      parameters:
+        - { name: turma, in: query, schema: { type: string } }
+        - { name: nome, in: query, schema: { type: string } }
+        - { name: ordenar, in: query, schema: { type: string, enum: [nome, turma, matricula, createdAt] } }
+        - { name: direcao, in: query, schema: { type: string, enum: [asc, desc] } }
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+        - { name: limit, in: query, schema: { type: integer, default: 10 } }
+      responses:
+        "200":
+          description: Lista paginada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dados: { type: array, items: { $ref: "#/components/schemas/Estudante" } }
+                  paginacao: { $ref: "#/components/schemas/Paginacao" }
+    post:
+      tags: [Estudantes]
+      summary: Cadastra um novo estudante
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/NovoEstudante" } } }
+      responses:
+        "201": { description: Criado, content: { application/json: { schema: { $ref: "#/components/schemas/Estudante" } } } }
+        "400": { $ref: "#/components/responses/EntradaInvalida" }
+        "409": { $ref: "#/components/responses/Conflito" }
+
+  /estudantes/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get:
+      tags: [Estudantes]
+      summary: Retorna um estudante específico
+      responses:
+        "200": { description: Encontrado, content: { application/json: { schema: { $ref: "#/components/schemas/Estudante" } } } }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+    put:
+      tags: [Estudantes]
+      summary: Substitui um estudante existente
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/NovoEstudante" } } }
+      responses:
+        "200": { description: Substituído, content: { application/json: { schema: { $ref: "#/components/schemas/Estudante" } } } }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflito" }
+    patch:
+      tags: [Estudantes]
+      summary: Atualiza parcialmente um estudante
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/EstudanteParcial" } } }
+      responses:
+        "200": { description: Atualizado, content: { application/json: { schema: { $ref: "#/components/schemas/Estudante" } } } }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflito" }
+    delete:
+      tags: [Estudantes]
+      summary: Remove um estudante (soft delete)
+      responses:
+        "204": { description: Removido }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflito" }
+
+  /estudantes/{id}/emprestimos:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get:
+      tags: [Estudantes, Empréstimos]
+      summary: Empréstimos de um estudante (endpoint com dados relacionados — inclui o livro de cada empréstimo)
+      parameters:
+        - { name: status, in: query, schema: { type: string, enum: [ativo, devolvido, atrasado] } }
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+        - { name: limit, in: query, schema: { type: integer, default: 10 } }
+      responses:
+        "200":
+          description: Lista paginada de empréstimos, cada um com o objeto `livro` (id/titulo/autor) já carregado via JOIN
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dados: { type: array, items: { $ref: "#/components/schemas/EmprestimoComLivro" } }
+                  paginacao: { $ref: "#/components/schemas/Paginacao" }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+
+  /emprestimos:
+    get:
+      tags: [Empréstimos]
+      summary: Lista empréstimos
+      parameters:
+        - { name: status, in: query, schema: { type: string, enum: [ativo, devolvido, atrasado] } }
+        - { name: estudanteId, in: query, schema: { type: integer } }
+        - { name: livroId, in: query, schema: { type: integer } }
+        - { name: ordenar, in: query, schema: { type: string } }
+        - { name: direcao, in: query, schema: { type: string, enum: [asc, desc] } }
+        - { name: page, in: query, schema: { type: integer, default: 1 } }
+        - { name: limit, in: query, schema: { type: integer, default: 10 } }
+      responses:
+        "200":
+          description: Lista paginada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dados: { type: array, items: { $ref: "#/components/schemas/Emprestimo" } }
+                  paginacao: { $ref: "#/components/schemas/Paginacao" }
+    post:
+      tags: [Empréstimos]
+      summary: Registra um novo empréstimo (operação transacional)
+      description: >
+        Em uma única transação: valida a existência do livro e do estudante,
+        verifica `quantidadeDisponivel > 0`, cria o empréstimo e decrementa o
+        exemplar. Se qualquer etapa falhar, tudo é desfeito (rollback).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NovoEmprestimo" }
+            example: { livroId: 2, estudanteId: 3, dataEmprestimo: "2026-09-05", dataDevolucaoPrevista: "2026-09-19" }
+      responses:
+        "201": { description: Criado, content: { application/json: { schema: { $ref: "#/components/schemas/Emprestimo" } } } }
+        "400": { $ref: "#/components/responses/EntradaInvalida" }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+        "409": { $ref: "#/components/responses/Conflito" }
+
+  /emprestimos/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get:
+      tags: [Empréstimos]
+      summary: Retorna um empréstimo específico
+      responses:
+        "200": { description: Encontrado, content: { application/json: { schema: { $ref: "#/components/schemas/Emprestimo" } } } }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+    put:
+      tags: [Empréstimos]
+      summary: Substitui um empréstimo existente
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/NovoEmprestimo" } } }
+      responses:
+        "200": { description: Substituído, content: { application/json: { schema: { $ref: "#/components/schemas/Emprestimo" } } } }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+    patch:
+      tags: [Empréstimos]
+      summary: Atualiza parcialmente (ex. registrar devolução — também transacional)
+      description: Marcar `status: devolvido` repõe `quantidadeDisponivel` do livro na mesma transação.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EmprestimoParcial" }
+            example: { status: devolvido, dataDevolucaoReal: "2026-09-10" }
+      responses:
+        "200": { description: Atualizado, content: { application/json: { schema: { $ref: "#/components/schemas/Emprestimo" } } } }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+    delete:
+      tags: [Empréstimos]
+      summary: Remove um empréstimo (repõe o exemplar se estava ativo — transacional)
+      responses:
+        "204": { description: Removido }
+        "404": { $ref: "#/components/responses/NaoEncontrado" }
+
+components:
+  schemas:
+    Paginacao:
+      type: object
+      properties:
+        total: { type: integer }
+        paginaAtual: { type: integer }
+        totalPaginas: { type: integer }
+        limit: { type: integer }
+
+    Erro:
+      type: object
+      properties:
+        erro:
+          type: object
+          properties:
+            codigo: { type: string, example: RECURSO_NAO_ENCONTRADO }
+            mensagem: { type: string }
+
+    NovoLivro:
+      type: object
+      required: [titulo, autor, isbn, anoPublicacao, quantidadeTotal, generos]
+      properties:
+        titulo: { type: string }
+        autor: { type: string }
+        isbn: { type: string }
+        anoPublicacao: { type: integer }
+        quantidadeTotal: { type: integer }
+        quantidadeDisponivel: { type: integer }
+        generos: { type: array, items: { type: string }, example: [ficcao, fantasia] }
+    LivroParcial:
+      allOf: [{ $ref: "#/components/schemas/NovoLivro" }]
+    Livro:
+      allOf:
+        - type: object
+          properties:
+            id: { type: integer }
+            createdAt: { type: string, format: date-time }
+            updatedAt: { type: string, format: date-time }
+        - $ref: "#/components/schemas/NovoLivro"
+
+    NovoEstudante:
+      type: object
+      required: [nome, email, matricula, turma]
+      properties:
+        nome: { type: string }
+        email: { type: string, format: email }
+        matricula: { type: string }
+        turma: { type: string }
+    EstudanteParcial:
+      allOf: [{ $ref: "#/components/schemas/NovoEstudante" }]
+    Estudante:
+      allOf:
+        - type: object
+          properties: { id: { type: integer } }
+        - $ref: "#/components/schemas/NovoEstudante"
+
+    NovoEmprestimo:
+      type: object
+      required: [livroId, estudanteId, dataEmprestimo, dataDevolucaoPrevista]
+      properties:
+        livroId: { type: integer }
+        estudanteId: { type: integer }
+        dataEmprestimo: { type: string, format: date }
+        dataDevolucaoPrevista: { type: string, format: date }
+    EmprestimoParcial:
+      type: object
+      properties:
+        status: { type: string, enum: [ativo, devolvido, atrasado] }
+        dataDevolucaoReal: { type: string, format: date, nullable: true }
+    Emprestimo:
+      allOf:
+        - type: object
+          properties:
+            id: { type: integer }
+            status: { type: string, enum: [ativo, devolvido, atrasado] }
+            dataDevolucaoReal: { type: string, format: date, nullable: true }
+        - $ref: "#/components/schemas/NovoEmprestimo"
+    EmprestimoComLivro:
+      allOf:
+        - $ref: "#/components/schemas/Emprestimo"
+        - type: object
+          properties:
+            livro:
+              type: object
+              properties:
+                id: { type: integer }
+                titulo: { type: string }
+                autor: { type: string }
+
+  responses:
+    NaoEncontrado:
+      description: Recurso não encontrado
+      content: { application/json: { schema: { $ref: "#/components/schemas/Erro" } } }
+    EntradaInvalida:
+      description: Dados de entrada inválidos
+      content: { application/json: { schema: { $ref: "#/components/schemas/Erro" } } }
+    Conflito:
+      description: Conflito (violação de UNIQUE, integridade referencial ou regra de negócio)
+      content: { application/json: { schema: { $ref: "#/components/schemas/Erro" } } }

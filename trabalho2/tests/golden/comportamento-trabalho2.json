@@ -1,0 +1,2797 @@
+[
+  {
+    "nome": "raiz",
+    "status": 200,
+    "corpo": {
+      "mensagem": "API do Sistema de Biblioteca Escolar (Trabalho 2 — com banco de dados relacional)",
+      "documentacao": "/docs",
+      "versao": "v1",
+      "recursos": [
+        "/api/v1/livros",
+        "/api/v1/estudantes",
+        "/api/v1/emprestimos"
+      ]
+    }
+  },
+  {
+    "nome": "rota inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ROTA_NAO_ENCONTRADA",
+        "mensagem": "A rota GET /api/v1/nao-existe não existe."
+      }
+    }
+  },
+  {
+    "nome": "livros: listar",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "titulo": "Dom Casmurro",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1109-3",
+          "anoPublicacao": 1899,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 2,
+          "titulo": "O Cortiço",
+          "autor": "Aluísio Azevedo",
+          "isbn": "978-85-254-1110-9",
+          "anoPublicacao": 1890,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "titulo": "Duna",
+          "autor": "Frank Herbert",
+          "isbn": "978-85-254-1111-6",
+          "anoPublicacao": 1965,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao",
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "titulo": "Fundação",
+          "autor": "Isaac Asimov",
+          "isbn": "978-85-254-1112-3",
+          "anoPublicacao": 1951,
+          "quantidadeTotal": 2,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "titulo": "O Pequeno Príncipe",
+          "autor": "Antoine de Saint-Exupéry",
+          "isbn": "978-85-254-1113-0",
+          "anoPublicacao": 1943,
+          "quantidadeTotal": 6,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "titulo": "O Hobbit",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "978-85-254-1114-7",
+          "anoPublicacao": 1937,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "titulo": "Neuromancer",
+          "autor": "William Gibson",
+          "isbn": "978-85-254-1115-4",
+          "anoPublicacao": 1984,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "titulo": "Memórias Póstumas de Brás Cubas",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1116-1",
+          "anoPublicacao": 1881,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "titulo": "Steve Jobs",
+          "autor": "Walter Isaacson",
+          "isbn": "978-85-254-1117-8",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "biografia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "titulo": "Sapiens: Uma Breve História da Humanidade",
+          "autor": "Yuval Noah Harari",
+          "isbn": "978-85-254-1118-5",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "historia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 12,
+        "paginaAtual": 1,
+        "totalPaginas": 2,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: página 2 limite 5",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 6,
+          "titulo": "O Hobbit",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "978-85-254-1114-7",
+          "anoPublicacao": 1937,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "titulo": "Neuromancer",
+          "autor": "William Gibson",
+          "isbn": "978-85-254-1115-4",
+          "anoPublicacao": 1984,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "titulo": "Memórias Póstumas de Brás Cubas",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1116-1",
+          "anoPublicacao": 1881,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "titulo": "Steve Jobs",
+          "autor": "Walter Isaacson",
+          "isbn": "978-85-254-1117-8",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "biografia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "titulo": "Sapiens: Uma Breve História da Humanidade",
+          "autor": "Yuval Noah Harari",
+          "isbn": "978-85-254-1118-5",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "historia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 12,
+        "paginaAtual": 2,
+        "totalPaginas": 3,
+        "limit": 5
+      }
+    }
+  },
+  {
+    "nome": "livros: page=0 e limit inválido",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "titulo": "Dom Casmurro",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1109-3",
+          "anoPublicacao": 1899,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 2,
+          "titulo": "O Cortiço",
+          "autor": "Aluísio Azevedo",
+          "isbn": "978-85-254-1110-9",
+          "anoPublicacao": 1890,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "titulo": "Duna",
+          "autor": "Frank Herbert",
+          "isbn": "978-85-254-1111-6",
+          "anoPublicacao": 1965,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao",
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "titulo": "Fundação",
+          "autor": "Isaac Asimov",
+          "isbn": "978-85-254-1112-3",
+          "anoPublicacao": 1951,
+          "quantidadeTotal": 2,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "titulo": "O Pequeno Príncipe",
+          "autor": "Antoine de Saint-Exupéry",
+          "isbn": "978-85-254-1113-0",
+          "anoPublicacao": 1943,
+          "quantidadeTotal": 6,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "titulo": "O Hobbit",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "978-85-254-1114-7",
+          "anoPublicacao": 1937,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "titulo": "Neuromancer",
+          "autor": "William Gibson",
+          "isbn": "978-85-254-1115-4",
+          "anoPublicacao": 1984,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "titulo": "Memórias Póstumas de Brás Cubas",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1116-1",
+          "anoPublicacao": 1881,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "titulo": "Steve Jobs",
+          "autor": "Walter Isaacson",
+          "isbn": "978-85-254-1117-8",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "biografia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "titulo": "Sapiens: Uma Breve História da Humanidade",
+          "autor": "Yuval Noah Harari",
+          "isbn": "978-85-254-1118-5",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "historia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 12,
+        "paginaAtual": 1,
+        "totalPaginas": 2,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: filtro gênero",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 5,
+          "titulo": "O Pequeno Príncipe",
+          "autor": "Antoine de Saint-Exupéry",
+          "isbn": "978-85-254-1113-0",
+          "anoPublicacao": 1943,
+          "quantidadeTotal": 6,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "titulo": "O Hobbit",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "978-85-254-1114-7",
+          "anoPublicacao": 1937,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 11,
+          "titulo": "Alice no País das Maravilhas",
+          "autor": "Lewis Carroll",
+          "isbn": "978-85-254-1119-2",
+          "anoPublicacao": 1865,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 3,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: gênero inexistente",
+    "status": 200,
+    "corpo": {
+      "dados": [],
+      "paginacao": {
+        "total": 0,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: busca por título",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "titulo": "Dom Casmurro",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1109-3",
+          "anoPublicacao": 1899,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 1,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: autor + ordenação desc",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "titulo": "Dom Casmurro",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1109-3",
+          "anoPublicacao": 1899,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "titulo": "Memórias Póstumas de Brás Cubas",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1116-1",
+          "anoPublicacao": 1881,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 2,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: faixa de anos + ordenar título",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 12,
+          "titulo": "Cem Anos de Solidão",
+          "autor": "Gabriel García Márquez",
+          "isbn": "978-85-254-1120-8",
+          "anoPublicacao": 1967,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "romance",
+            "ficcao"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "titulo": "Duna",
+          "autor": "Frank Herbert",
+          "isbn": "978-85-254-1111-6",
+          "anoPublicacao": 1965,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao",
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "titulo": "Fundação",
+          "autor": "Isaac Asimov",
+          "isbn": "978-85-254-1112-3",
+          "anoPublicacao": 1951,
+          "quantidadeTotal": 2,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "titulo": "Neuromancer",
+          "autor": "William Gibson",
+          "isbn": "978-85-254-1115-4",
+          "anoPublicacao": 1984,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 4,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: ano exato",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 9,
+          "titulo": "Steve Jobs",
+          "autor": "Walter Isaacson",
+          "isbn": "978-85-254-1117-8",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "biografia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "titulo": "Sapiens: Uma Breve História da Humanidade",
+          "autor": "Yuval Noah Harari",
+          "isbn": "978-85-254-1118-5",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "historia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 2,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: ordenar por campo inválido",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 12,
+          "titulo": "Cem Anos de Solidão",
+          "autor": "Gabriel García Márquez",
+          "isbn": "978-85-254-1120-8",
+          "anoPublicacao": 1967,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "romance",
+            "ficcao"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 11,
+          "titulo": "Alice no País das Maravilhas",
+          "autor": "Lewis Carroll",
+          "isbn": "978-85-254-1119-2",
+          "anoPublicacao": 1865,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "titulo": "Sapiens: Uma Breve História da Humanidade",
+          "autor": "Yuval Noah Harari",
+          "isbn": "978-85-254-1118-5",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "historia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "titulo": "Steve Jobs",
+          "autor": "Walter Isaacson",
+          "isbn": "978-85-254-1117-8",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "biografia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "titulo": "Memórias Póstumas de Brás Cubas",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1116-1",
+          "anoPublicacao": 1881,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "titulo": "Neuromancer",
+          "autor": "William Gibson",
+          "isbn": "978-85-254-1115-4",
+          "anoPublicacao": 1984,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "titulo": "O Hobbit",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "978-85-254-1114-7",
+          "anoPublicacao": 1937,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "titulo": "O Pequeno Príncipe",
+          "autor": "Antoine de Saint-Exupéry",
+          "isbn": "978-85-254-1113-0",
+          "anoPublicacao": 1943,
+          "quantidadeTotal": 6,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "titulo": "Fundação",
+          "autor": "Isaac Asimov",
+          "isbn": "978-85-254-1112-3",
+          "anoPublicacao": 1951,
+          "quantidadeTotal": 2,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "titulo": "Duna",
+          "autor": "Frank Herbert",
+          "isbn": "978-85-254-1111-6",
+          "anoPublicacao": 1965,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao",
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 12,
+        "paginaAtual": 1,
+        "totalPaginas": 2,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "livros: buscar por id",
+    "status": 200,
+    "corpo": {
+      "id": 1,
+      "titulo": "Dom Casmurro",
+      "autor": "Machado de Assis",
+      "isbn": "978-85-254-1109-3",
+      "anoPublicacao": 1899,
+      "quantidadeTotal": 5,
+      "quantidadeDisponivel": 4,
+      "generos": [
+        "romance"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "livros: id inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_NAO_ENCONTRADO",
+        "mensagem": "Livro com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "livros: criar",
+    "status": 201,
+    "corpo": {
+      "id": 13,
+      "titulo": "O Guia do Mochileiro das Galáxias",
+      "autor": "Douglas Adams",
+      "isbn": "978-00-000-9999-9",
+      "anoPublicacao": 1979,
+      "quantidadeTotal": 3,
+      "quantidadeDisponivel": 3,
+      "generos": [
+        "ficcao",
+        "novo-genero"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "livros: criar sem campos",
+    "status": 400,
+    "corpo": {
+      "erro": {
+        "codigo": "ENTRADA_INVALIDA",
+        "mensagem": "autor: Required; isbn: Required; anoPublicacao: Required; quantidadeTotal: Required; generos: Required"
+      }
+    }
+  },
+  {
+    "nome": "livros: criar ISBN duplicado",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "REGISTRO_DUPLICADO",
+        "mensagem": "Já existe um registro com o mesmo valor para 'isbn'"
+      }
+    }
+  },
+  {
+    "nome": "livros: criar ano como texto",
+    "status": 400,
+    "corpo": {
+      "erro": {
+        "codigo": "ENTRADA_INVALIDA",
+        "mensagem": "anoPublicacao: anoPublicacao deve ser um número"
+      }
+    }
+  },
+  {
+    "nome": "livros: criar sem gêneros",
+    "status": 400,
+    "corpo": {
+      "erro": {
+        "codigo": "ENTRADA_INVALIDA",
+        "mensagem": "generos: informe ao menos um gênero"
+      }
+    }
+  },
+  {
+    "nome": "livros: JSON malformado",
+    "status": 500,
+    "corpo": {
+      "erro": {
+        "codigo": "ERRO_INTERNO",
+        "mensagem": "Ocorreu um erro inesperado no servidor."
+      }
+    }
+  },
+  {
+    "nome": "livros: PUT",
+    "status": 200,
+    "corpo": {
+      "id": 13,
+      "titulo": "Guia (2ª edição)",
+      "autor": "Douglas Adams",
+      "isbn": "978-00-000-9999-9",
+      "anoPublicacao": 1979,
+      "quantidadeTotal": 5,
+      "quantidadeDisponivel": 4,
+      "generos": [
+        "ficcao"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "livros: PUT inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_NAO_ENCONTRADO",
+        "mensagem": "Livro com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "livros: PUT ISBN duplicado",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "REGISTRO_DUPLICADO",
+        "mensagem": "Já existe um registro com o mesmo valor para 'isbn'"
+      }
+    }
+  },
+  {
+    "nome": "livros: PATCH quantidade",
+    "status": 200,
+    "corpo": {
+      "id": 13,
+      "titulo": "Guia (2ª edição)",
+      "autor": "Douglas Adams",
+      "isbn": "978-00-000-9999-9",
+      "anoPublicacao": 1979,
+      "quantidadeTotal": 10,
+      "quantidadeDisponivel": 4,
+      "generos": [
+        "ficcao"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "livros: PATCH gêneros",
+    "status": 200,
+    "corpo": {
+      "id": 13,
+      "titulo": "Guia (2ª edição)",
+      "autor": "Douglas Adams",
+      "isbn": "978-00-000-9999-9",
+      "anoPublicacao": 1979,
+      "quantidadeTotal": 10,
+      "quantidadeDisponivel": 4,
+      "generos": [
+        "poesia"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "livros: PATCH corpo vazio",
+    "status": 200,
+    "corpo": {
+      "id": 13,
+      "titulo": "Guia (2ª edição)",
+      "autor": "Douglas Adams",
+      "isbn": "978-00-000-9999-9",
+      "anoPublicacao": 1979,
+      "quantidadeTotal": 10,
+      "quantidadeDisponivel": 4,
+      "generos": [
+        "poesia"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "livros: PATCH inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_NAO_ENCONTRADO",
+        "mensagem": "Livro com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "livros: DELETE com empréstimo ativo",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_EM_USO",
+        "mensagem": "Livro com id 1 possui empréstimos ativos e não pode ser removido"
+      }
+    }
+  },
+  {
+    "nome": "livros: DELETE (soft delete)",
+    "status": 204,
+    "corpo": null
+  },
+  {
+    "nome": "livros: GET após soft delete",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_NAO_ENCONTRADO",
+        "mensagem": "Livro com id 13 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "livros: DELETE inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_NAO_ENCONTRADO",
+        "mensagem": "Livro com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "livros: listagem completa após mudanças",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "titulo": "Dom Casmurro",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1109-3",
+          "anoPublicacao": 1899,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 2,
+          "titulo": "O Cortiço",
+          "autor": "Aluísio Azevedo",
+          "isbn": "978-85-254-1110-9",
+          "anoPublicacao": 1890,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "titulo": "Duna",
+          "autor": "Frank Herbert",
+          "isbn": "978-85-254-1111-6",
+          "anoPublicacao": 1965,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao",
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "titulo": "Fundação",
+          "autor": "Isaac Asimov",
+          "isbn": "978-85-254-1112-3",
+          "anoPublicacao": 1951,
+          "quantidadeTotal": 2,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "titulo": "O Pequeno Príncipe",
+          "autor": "Antoine de Saint-Exupéry",
+          "isbn": "978-85-254-1113-0",
+          "anoPublicacao": 1943,
+          "quantidadeTotal": 6,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "titulo": "O Hobbit",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "978-85-254-1114-7",
+          "anoPublicacao": 1937,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "titulo": "Neuromancer",
+          "autor": "William Gibson",
+          "isbn": "978-85-254-1115-4",
+          "anoPublicacao": 1984,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "titulo": "Memórias Póstumas de Brás Cubas",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1116-1",
+          "anoPublicacao": 1881,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "titulo": "Steve Jobs",
+          "autor": "Walter Isaacson",
+          "isbn": "978-85-254-1117-8",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "biografia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "titulo": "Sapiens: Uma Breve História da Humanidade",
+          "autor": "Yuval Noah Harari",
+          "isbn": "978-85-254-1118-5",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "historia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 11,
+          "titulo": "Alice no País das Maravilhas",
+          "autor": "Lewis Carroll",
+          "isbn": "978-85-254-1119-2",
+          "anoPublicacao": 1865,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 12,
+          "titulo": "Cem Anos de Solidão",
+          "autor": "Gabriel García Márquez",
+          "isbn": "978-85-254-1120-8",
+          "anoPublicacao": 1967,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "romance",
+            "ficcao"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 12,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 100
+      }
+    }
+  },
+  {
+    "nome": "estudantes: listar",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "nome": "Ana Beatriz Souza",
+          "email": "ana.souza@escola.edu.br",
+          "matricula": "2024001",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 2,
+          "nome": "Bruno Costa Lima",
+          "email": "bruno.lima@escola.edu.br",
+          "matricula": "2024002",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 3,
+          "nome": "Carla Mendes",
+          "email": "carla.mendes@escola.edu.br",
+          "matricula": "2024003",
+          "turma": "2B",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 4,
+          "nome": "Daniela Ferreira",
+          "email": "daniela.ferreira@escola.edu.br",
+          "matricula": "2024004",
+          "turma": "3B",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 5,
+          "nome": "Eduardo Alves",
+          "email": "eduardo.alves@escola.edu.br",
+          "matricula": "2024005",
+          "turma": "2A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 6,
+          "nome": "Fernanda Rocha",
+          "email": "fernanda.rocha@escola.edu.br",
+          "matricula": "2024006",
+          "turma": "1C",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 7,
+          "nome": "Gabriel Santos",
+          "email": "gabriel.santos@escola.edu.br",
+          "matricula": "2024007",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 8,
+          "nome": "Helena Martins",
+          "email": "helena.martins@escola.edu.br",
+          "matricula": "2024008",
+          "turma": "2B",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 9,
+          "nome": "Igor Barbosa",
+          "email": "igor.barbosa@escola.edu.br",
+          "matricula": "2024009",
+          "turma": "1A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 10,
+          "nome": "Juliana Pires",
+          "email": "juliana.pires@escola.edu.br",
+          "matricula": "2024010",
+          "turma": "3B",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        }
+      ],
+      "paginacao": {
+        "total": 12,
+        "paginaAtual": 1,
+        "totalPaginas": 2,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "estudantes: turma + ordenar nome desc",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 7,
+          "nome": "Gabriel Santos",
+          "email": "gabriel.santos@escola.edu.br",
+          "matricula": "2024007",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 2,
+          "nome": "Bruno Costa Lima",
+          "email": "bruno.lima@escola.edu.br",
+          "matricula": "2024002",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 1,
+          "nome": "Ana Beatriz Souza",
+          "email": "ana.souza@escola.edu.br",
+          "matricula": "2024001",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        }
+      ],
+      "paginacao": {
+        "total": 3,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "estudantes: busca por nome",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "nome": "Ana Beatriz Souza",
+          "email": "ana.souza@escola.edu.br",
+          "matricula": "2024001",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 4,
+          "nome": "Daniela Ferreira",
+          "email": "daniela.ferreira@escola.edu.br",
+          "matricula": "2024004",
+          "turma": "3B",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 6,
+          "nome": "Fernanda Rocha",
+          "email": "fernanda.rocha@escola.edu.br",
+          "matricula": "2024006",
+          "turma": "1C",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 7,
+          "nome": "Gabriel Santos",
+          "email": "gabriel.santos@escola.edu.br",
+          "matricula": "2024007",
+          "turma": "3A",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        },
+        {
+          "id": 10,
+          "nome": "Juliana Pires",
+          "email": "juliana.pires@escola.edu.br",
+          "matricula": "2024010",
+          "turma": "3B",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "deletedAt": null
+        }
+      ],
+      "paginacao": {
+        "total": 5,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "estudantes: buscar por id",
+    "status": 200,
+    "corpo": {
+      "id": 1,
+      "nome": "Ana Beatriz Souza",
+      "email": "ana.souza@escola.edu.br",
+      "matricula": "2024001",
+      "turma": "3A",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>",
+      "deletedAt": null
+    }
+  },
+  {
+    "nome": "estudantes: id inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_NAO_ENCONTRADO",
+        "mensagem": "Estudante com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: empréstimos do estudante",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "livroId": 1,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "livro": {
+            "id": 1,
+            "titulo": "Dom Casmurro",
+            "autor": "Machado de Assis"
+          }
+        },
+        {
+          "id": 13,
+          "livroId": 8,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-05-10",
+          "dataDevolucaoPrevista": "2026-05-24",
+          "dataDevolucaoReal": "2026-05-20",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "livro": {
+            "id": 8,
+            "titulo": "Memórias Póstumas de Brás Cubas",
+            "autor": "Machado de Assis"
+          }
+        }
+      ],
+      "paginacao": {
+        "total": 2,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "estudantes: empréstimos filtrados por status",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "livroId": 1,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>",
+          "livro": {
+            "id": 1,
+            "titulo": "Dom Casmurro",
+            "autor": "Machado de Assis"
+          }
+        }
+      ],
+      "paginacao": {
+        "total": 1,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "estudantes: empréstimos de inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_NAO_ENCONTRADO",
+        "mensagem": "Estudante com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: criar",
+    "status": 201,
+    "corpo": {
+      "id": 13,
+      "nome": "Marcos Vinícius Teixeira",
+      "email": "marcos.teixeira@escola.edu.br",
+      "matricula": "2024099",
+      "turma": "1B",
+      "updatedAt": "<timestamp>",
+      "createdAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "estudantes: e-mail inválido",
+    "status": 400,
+    "corpo": {
+      "erro": {
+        "codigo": "ENTRADA_INVALIDA",
+        "mensagem": "email: e-mail inválido"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: matrícula duplicada",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "REGISTRO_DUPLICADO",
+        "mensagem": "Já existe um registro com o mesmo valor para 'matricula'"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: e-mail duplicado",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "REGISTRO_DUPLICADO",
+        "mensagem": "Já existe um registro com o mesmo valor para 'email'"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: PUT",
+    "status": 200,
+    "corpo": {
+      "id": 13,
+      "nome": "Marcos V. Teixeira",
+      "email": "marcos.teixeira@escola.edu.br",
+      "matricula": "2024099",
+      "turma": "1B",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>",
+      "deletedAt": null
+    }
+  },
+  {
+    "nome": "estudantes: PUT matrícula duplicada",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "REGISTRO_DUPLICADO",
+        "mensagem": "Já existe um registro com o mesmo valor para 'matricula'"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: PUT inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_NAO_ENCONTRADO",
+        "mensagem": "Estudante com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: PATCH",
+    "status": 200,
+    "corpo": {
+      "id": 13,
+      "nome": "Marcos V. Teixeira",
+      "email": "marcos.teixeira@escola.edu.br",
+      "matricula": "2024099",
+      "turma": "2C",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>",
+      "deletedAt": null
+    }
+  },
+  {
+    "nome": "estudantes: PATCH inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_NAO_ENCONTRADO",
+        "mensagem": "Estudante com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: DELETE com empréstimo ativo",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_COM_EMPRESTIMO_ATIVO",
+        "mensagem": "Estudante com id 1 possui empréstimos ativos e não pode ser removido"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: DELETE (soft delete)",
+    "status": 204,
+    "corpo": null
+  },
+  {
+    "nome": "estudantes: GET após soft delete",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_NAO_ENCONTRADO",
+        "mensagem": "Estudante com id 13 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "estudantes: DELETE inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_NAO_ENCONTRADO",
+        "mensagem": "Estudante com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: listar",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "livroId": 1,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 2,
+          "livroId": 3,
+          "estudanteId": 2,
+          "dataEmprestimo": "2026-07-20",
+          "dataDevolucaoPrevista": "2026-08-03",
+          "dataDevolucaoReal": "2026-08-01",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "livroId": 3,
+          "estudanteId": 5,
+          "dataEmprestimo": "2026-08-10",
+          "dataDevolucaoPrevista": "2026-08-24",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "livroId": 5,
+          "estudanteId": 3,
+          "dataEmprestimo": "2026-08-05",
+          "dataDevolucaoPrevista": "2026-08-19",
+          "dataDevolucaoReal": "2026-08-18",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "livroId": 6,
+          "estudanteId": 4,
+          "dataEmprestimo": "2026-08-12",
+          "dataDevolucaoPrevista": "2026-08-26",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "livroId": 9,
+          "estudanteId": 6,
+          "dataEmprestimo": "2026-07-15",
+          "dataDevolucaoPrevista": "2026-07-29",
+          "dataDevolucaoReal": "2026-07-28",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "livroId": 10,
+          "estudanteId": 7,
+          "dataEmprestimo": "2026-08-14",
+          "dataDevolucaoPrevista": "2026-08-28",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "livroId": 12,
+          "estudanteId": 8,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "livroId": 12,
+          "estudanteId": 9,
+          "dataEmprestimo": "2026-07-01",
+          "dataDevolucaoPrevista": "2026-07-15",
+          "dataDevolucaoReal": "2026-07-14",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "livroId": 2,
+          "estudanteId": 10,
+          "dataEmprestimo": "2026-06-01",
+          "dataDevolucaoPrevista": "2026-06-15",
+          "dataDevolucaoReal": "2026-06-10",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 14,
+        "paginaAtual": 1,
+        "totalPaginas": 2,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: filtro status",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "livroId": 1,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "livroId": 3,
+          "estudanteId": 5,
+          "dataEmprestimo": "2026-08-10",
+          "dataDevolucaoPrevista": "2026-08-24",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "livroId": 6,
+          "estudanteId": 4,
+          "dataEmprestimo": "2026-08-12",
+          "dataDevolucaoPrevista": "2026-08-26",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "livroId": 10,
+          "estudanteId": 7,
+          "dataEmprestimo": "2026-08-14",
+          "dataDevolucaoPrevista": "2026-08-28",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "livroId": 12,
+          "estudanteId": 8,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 12,
+          "livroId": 7,
+          "estudanteId": 12,
+          "dataEmprestimo": "2026-08-16",
+          "dataDevolucaoPrevista": "2026-08-30",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 14,
+          "livroId": 11,
+          "estudanteId": 2,
+          "dataEmprestimo": "2026-08-18",
+          "dataDevolucaoPrevista": "2026-09-01",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 7,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: filtro livro + ordenação",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 3,
+          "livroId": 3,
+          "estudanteId": 5,
+          "dataEmprestimo": "2026-08-10",
+          "dataDevolucaoPrevista": "2026-08-24",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 2,
+          "livroId": 3,
+          "estudanteId": 2,
+          "dataEmprestimo": "2026-07-20",
+          "dataDevolucaoPrevista": "2026-08-03",
+          "dataDevolucaoReal": "2026-08-01",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 2,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: filtro estudante",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "livroId": 1,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 13,
+          "livroId": 8,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-05-10",
+          "dataDevolucaoPrevista": "2026-05-24",
+          "dataDevolucaoReal": "2026-05-20",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 2,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: buscar por id",
+    "status": 200,
+    "corpo": {
+      "id": 1,
+      "livroId": 1,
+      "estudanteId": 1,
+      "dataEmprestimo": "2026-08-01",
+      "dataDevolucaoPrevista": "2026-08-15",
+      "dataDevolucaoReal": null,
+      "status": "ativo",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: id inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "EMPRESTIMO_NAO_ENCONTRADO",
+        "mensagem": "Empréstimo com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "estoque antes (livro 2)",
+    "status": 200,
+    "corpo": {
+      "id": 2,
+      "titulo": "O Cortiço",
+      "autor": "Aluísio Azevedo",
+      "isbn": "978-85-254-1110-9",
+      "anoPublicacao": 1890,
+      "quantidadeTotal": 3,
+      "quantidadeDisponivel": 3,
+      "generos": [
+        "romance"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: registrar",
+    "status": 201,
+    "corpo": {
+      "id": 15,
+      "livroId": 2,
+      "estudanteId": 3,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "status": "ativo",
+      "updatedAt": "<timestamp>",
+      "createdAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "estoque depois (livro 2)",
+    "status": 200,
+    "corpo": {
+      "id": 2,
+      "titulo": "O Cortiço",
+      "autor": "Aluísio Azevedo",
+      "isbn": "978-85-254-1110-9",
+      "anoPublicacao": 1890,
+      "quantidadeTotal": 3,
+      "quantidadeDisponivel": 2,
+      "generos": [
+        "romance"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: livro inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_NAO_ENCONTRADO",
+        "mensagem": "Livro com id 99999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: estudante inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "ESTUDANTE_NAO_ENCONTRADO",
+        "mensagem": "Estudante com id 99999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: sem campos",
+    "status": 400,
+    "corpo": {
+      "erro": {
+        "codigo": "ENTRADA_INVALIDA",
+        "mensagem": "estudanteId: Required; dataEmprestimo: Required; dataDevolucaoPrevista: Required"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: data inválida",
+    "status": 400,
+    "corpo": {
+      "erro": {
+        "codigo": "ENTRADA_INVALIDA",
+        "mensagem": "dataEmprestimo: dataEmprestimo deve estar no formato AAAA-MM-DD"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: livro 4 (1º exemplar)",
+    "status": 201,
+    "corpo": {
+      "id": 16,
+      "livroId": 4,
+      "estudanteId": 6,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "status": "ativo",
+      "updatedAt": "<timestamp>",
+      "createdAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: livro 4 (2º exemplar)",
+    "status": 201,
+    "corpo": {
+      "id": 17,
+      "livroId": 4,
+      "estudanteId": 7,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "status": "ativo",
+      "updatedAt": "<timestamp>",
+      "createdAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: livro 4 sem estoque",
+    "status": 409,
+    "corpo": {
+      "erro": {
+        "codigo": "LIVRO_INDISPONIVEL",
+        "mensagem": "Não há exemplares disponíveis do livro \"Fundação\""
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: histórico do livro 4 (sem fantasma)",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 11,
+          "livroId": 4,
+          "estudanteId": 11,
+          "dataEmprestimo": "2026-06-05",
+          "dataDevolucaoPrevista": "2026-06-19",
+          "dataDevolucaoReal": "2026-06-19",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 16,
+          "livroId": 4,
+          "estudanteId": 6,
+          "dataEmprestimo": "2026-09-05",
+          "dataDevolucaoPrevista": "2026-09-19",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 17,
+          "livroId": 4,
+          "estudanteId": 7,
+          "dataEmprestimo": "2026-09-05",
+          "dataDevolucaoPrevista": "2026-09-19",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 3,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 10
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: devolver com data",
+    "status": 200,
+    "corpo": {
+      "id": 15,
+      "livroId": 2,
+      "estudanteId": 3,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "dataDevolucaoReal": "2026-09-10",
+      "status": "devolvido",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "estoque após devolução (livro 2)",
+    "status": 200,
+    "corpo": {
+      "id": 2,
+      "titulo": "O Cortiço",
+      "autor": "Aluísio Azevedo",
+      "isbn": "978-85-254-1110-9",
+      "anoPublicacao": 1890,
+      "quantidadeTotal": 3,
+      "quantidadeDisponivel": 3,
+      "generos": [
+        "romance"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: devolver sem data (usa hoje)",
+    "status": 200,
+    "corpo": {
+      "id": 16,
+      "livroId": 4,
+      "estudanteId": 6,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "dataDevolucaoReal": "<hoje>",
+      "status": "devolvido",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: devolver de novo (idempotente)",
+    "status": 200,
+    "corpo": {
+      "id": 16,
+      "livroId": 4,
+      "estudanteId": 6,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "dataDevolucaoReal": "<hoje>",
+      "status": "devolvido",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "estoque após 2 devoluções (livro 4)",
+    "status": 200,
+    "corpo": {
+      "id": 4,
+      "titulo": "Fundação",
+      "autor": "Isaac Asimov",
+      "isbn": "978-85-254-1112-3",
+      "anoPublicacao": 1951,
+      "quantidadeTotal": 2,
+      "quantidadeDisponivel": 1,
+      "generos": [
+        "ficcao-cientifica"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: PATCH inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "EMPRESTIMO_NAO_ENCONTRADO",
+        "mensagem": "Empréstimo com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: PATCH atrasado",
+    "status": 200,
+    "corpo": {
+      "id": 17,
+      "livroId": 4,
+      "estudanteId": 7,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "dataDevolucaoReal": null,
+      "status": "atrasado",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: PATCH status inválido",
+    "status": 400,
+    "corpo": {
+      "erro": {
+        "codigo": "ENTRADA_INVALIDA",
+        "mensagem": "status: status deve ser ativo, devolvido ou atrasado"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: PUT",
+    "status": 200,
+    "corpo": {
+      "id": 17,
+      "livroId": 4,
+      "estudanteId": 8,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "dataDevolucaoReal": null,
+      "status": "atrasado",
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: PUT inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "EMPRESTIMO_NAO_ENCONTRADO",
+        "mensagem": "Empréstimo com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: DELETE não ativo",
+    "status": 204,
+    "corpo": null
+  },
+  {
+    "nome": "empréstimos: criar para teste de remoção",
+    "status": 201,
+    "corpo": {
+      "id": 18,
+      "livroId": 11,
+      "estudanteId": 12,
+      "dataEmprestimo": "2026-09-05",
+      "dataDevolucaoPrevista": "2026-09-19",
+      "status": "ativo",
+      "updatedAt": "<timestamp>",
+      "createdAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "estoque antes de remover (livro 11)",
+    "status": 200,
+    "corpo": {
+      "id": 11,
+      "titulo": "Alice no País das Maravilhas",
+      "autor": "Lewis Carroll",
+      "isbn": "978-85-254-1119-2",
+      "anoPublicacao": 1865,
+      "quantidadeTotal": 5,
+      "quantidadeDisponivel": 4,
+      "generos": [
+        "infantil",
+        "fantasia"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: DELETE ativo repõe estoque",
+    "status": 204,
+    "corpo": null
+  },
+  {
+    "nome": "estoque após remoção (livro 11)",
+    "status": 200,
+    "corpo": {
+      "id": 11,
+      "titulo": "Alice no País das Maravilhas",
+      "autor": "Lewis Carroll",
+      "isbn": "978-85-254-1119-2",
+      "anoPublicacao": 1865,
+      "quantidadeTotal": 5,
+      "quantidadeDisponivel": 5,
+      "generos": [
+        "infantil",
+        "fantasia"
+      ],
+      "createdAt": "<timestamp>",
+      "updatedAt": "<timestamp>"
+    }
+  },
+  {
+    "nome": "empréstimos: DELETE inexistente",
+    "status": 404,
+    "corpo": {
+      "erro": {
+        "codigo": "EMPRESTIMO_NAO_ENCONTRADO",
+        "mensagem": "Empréstimo com id 9999 não encontrado"
+      }
+    }
+  },
+  {
+    "nome": "empréstimos: listagem final",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 1,
+          "livroId": 1,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 2,
+          "livroId": 3,
+          "estudanteId": 2,
+          "dataEmprestimo": "2026-07-20",
+          "dataDevolucaoPrevista": "2026-08-03",
+          "dataDevolucaoReal": "2026-08-01",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "livroId": 3,
+          "estudanteId": 5,
+          "dataEmprestimo": "2026-08-10",
+          "dataDevolucaoPrevista": "2026-08-24",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "livroId": 5,
+          "estudanteId": 3,
+          "dataEmprestimo": "2026-08-05",
+          "dataDevolucaoPrevista": "2026-08-19",
+          "dataDevolucaoReal": "2026-08-18",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "livroId": 6,
+          "estudanteId": 4,
+          "dataEmprestimo": "2026-08-12",
+          "dataDevolucaoPrevista": "2026-08-26",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "livroId": 9,
+          "estudanteId": 6,
+          "dataEmprestimo": "2026-07-15",
+          "dataDevolucaoPrevista": "2026-07-29",
+          "dataDevolucaoReal": "2026-07-28",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "livroId": 10,
+          "estudanteId": 7,
+          "dataEmprestimo": "2026-08-14",
+          "dataDevolucaoPrevista": "2026-08-28",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "livroId": 12,
+          "estudanteId": 8,
+          "dataEmprestimo": "2026-08-01",
+          "dataDevolucaoPrevista": "2026-08-15",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "livroId": 12,
+          "estudanteId": 9,
+          "dataEmprestimo": "2026-07-01",
+          "dataDevolucaoPrevista": "2026-07-15",
+          "dataDevolucaoReal": "2026-07-14",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "livroId": 2,
+          "estudanteId": 10,
+          "dataEmprestimo": "2026-06-01",
+          "dataDevolucaoPrevista": "2026-06-15",
+          "dataDevolucaoReal": "2026-06-10",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 11,
+          "livroId": 4,
+          "estudanteId": 11,
+          "dataEmprestimo": "2026-06-05",
+          "dataDevolucaoPrevista": "2026-06-19",
+          "dataDevolucaoReal": "2026-06-19",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 12,
+          "livroId": 7,
+          "estudanteId": 12,
+          "dataEmprestimo": "2026-08-16",
+          "dataDevolucaoPrevista": "2026-08-30",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 13,
+          "livroId": 8,
+          "estudanteId": 1,
+          "dataEmprestimo": "2026-05-10",
+          "dataDevolucaoPrevista": "2026-05-24",
+          "dataDevolucaoReal": "2026-05-20",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 14,
+          "livroId": 11,
+          "estudanteId": 2,
+          "dataEmprestimo": "2026-08-18",
+          "dataDevolucaoPrevista": "2026-09-01",
+          "dataDevolucaoReal": null,
+          "status": "ativo",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 15,
+          "livroId": 2,
+          "estudanteId": 3,
+          "dataEmprestimo": "2026-09-05",
+          "dataDevolucaoPrevista": "2026-09-19",
+          "dataDevolucaoReal": "2026-09-10",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 16,
+          "livroId": 4,
+          "estudanteId": 6,
+          "dataEmprestimo": "2026-09-05",
+          "dataDevolucaoPrevista": "2026-09-19",
+          "dataDevolucaoReal": "<hoje>",
+          "status": "devolvido",
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 16,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 100
+      }
+    }
+  },
+  {
+    "nome": "livros: estado final (estoques)",
+    "status": 200,
+    "corpo": {
+      "dados": [
+        {
+          "id": 11,
+          "titulo": "Alice no País das Maravilhas",
+          "autor": "Lewis Carroll",
+          "isbn": "978-85-254-1119-2",
+          "anoPublicacao": 1865,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 12,
+          "titulo": "Cem Anos de Solidão",
+          "autor": "Gabriel García Márquez",
+          "isbn": "978-85-254-1120-8",
+          "anoPublicacao": 1967,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "romance",
+            "ficcao"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 1,
+          "titulo": "Dom Casmurro",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1109-3",
+          "anoPublicacao": 1899,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 3,
+          "titulo": "Duna",
+          "autor": "Frank Herbert",
+          "isbn": "978-85-254-1111-6",
+          "anoPublicacao": 1965,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 2,
+          "generos": [
+            "ficcao",
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 4,
+          "titulo": "Fundação",
+          "autor": "Isaac Asimov",
+          "isbn": "978-85-254-1112-3",
+          "anoPublicacao": 1951,
+          "quantidadeTotal": 2,
+          "quantidadeDisponivel": 1,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 8,
+          "titulo": "Memórias Póstumas de Brás Cubas",
+          "autor": "Machado de Assis",
+          "isbn": "978-85-254-1116-1",
+          "anoPublicacao": 1881,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 7,
+          "titulo": "Neuromancer",
+          "autor": "William Gibson",
+          "isbn": "978-85-254-1115-4",
+          "anoPublicacao": 1984,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "ficcao-cientifica"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 2,
+          "titulo": "O Cortiço",
+          "autor": "Aluísio Azevedo",
+          "isbn": "978-85-254-1110-9",
+          "anoPublicacao": 1890,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "romance"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 6,
+          "titulo": "O Hobbit",
+          "autor": "J.R.R. Tolkien",
+          "isbn": "978-85-254-1114-7",
+          "anoPublicacao": 1937,
+          "quantidadeTotal": 5,
+          "quantidadeDisponivel": 4,
+          "generos": [
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 5,
+          "titulo": "O Pequeno Príncipe",
+          "autor": "Antoine de Saint-Exupéry",
+          "isbn": "978-85-254-1113-0",
+          "anoPublicacao": 1943,
+          "quantidadeTotal": 6,
+          "quantidadeDisponivel": 5,
+          "generos": [
+            "infantil",
+            "fantasia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 10,
+          "titulo": "Sapiens: Uma Breve História da Humanidade",
+          "autor": "Yuval Noah Harari",
+          "isbn": "978-85-254-1118-5",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 4,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "historia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        },
+        {
+          "id": 9,
+          "titulo": "Steve Jobs",
+          "autor": "Walter Isaacson",
+          "isbn": "978-85-254-1117-8",
+          "anoPublicacao": 2011,
+          "quantidadeTotal": 3,
+          "quantidadeDisponivel": 3,
+          "generos": [
+            "biografia"
+          ],
+          "createdAt": "<timestamp>",
+          "updatedAt": "<timestamp>"
+        }
+      ],
+      "paginacao": {
+        "total": 12,
+        "paginaAtual": 1,
+        "totalPaginas": 1,
+        "limit": 100
+      }
+    }
+  }
+]

@@ -1,0 +1,11 @@
+const path = require('path');
+
+// O CLI do Sequelize só precisa saber onde estão a configuração, as migrations
+// e os seeders. Os models do ORM ficam DENTRO da camada de persistência
+// (src/repositories/sequelize/models) — nenhuma outra camada os enxerga.
+module.exports = {
+  config: path.resolve('src', 'repositories', 'sequelize', 'configuracao.js'),
+  'models-path': path.resolve('src', 'repositories', 'sequelize', 'models'),
+  'seeders-path': path.resolve('seeders'),
+  'migrations-path': path.resolve('migrations')
+};
